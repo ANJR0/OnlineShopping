@@ -1,0 +1,74 @@
+﻿@page "/orderItems/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3>OrderItem</h3>
+<a href="/OrderItems/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New OrderItem
+</a>
+<br />
+<br />
+
+@if (OrderItems == null)
+{
+    <div class="alert alert-info">Loading Category...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>OrderItem ID</th>
+                <th>Quantity</th>
+                <th>Product ID</th>
+                <th>Order ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var OrderItem in OrderItems)
+            {
+            <tr>
+                <td>@OrderItem.OrderItemID </td>
+                <td>@OrderItem.Quantity</td> 
+                <td>@OrderItem.Product.ProductID</td>
+                <td>@OrderItem.ShopOrder.ShopOrderID</td>
+                <td>
+                    <a href="/OrderItems/view/@OrderItem.OrderItemID" class="btn btn-primary">
+                        <span class="oi oi-book"></span>
+                    </a>
+                    <a href="/OrderItems/edit/@OrderItem.OrderItemID" class="btn btn-warning">
+                        <span class="oi oi-pencil"></span>
+                    </a>
+                    <button class="btn btn-danger" @onclick="@(()=>Delete(OrderItem.OrderItemID))">
+                        <span class="oi oi-delete"></span>
+                    </button>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<OrderItem> OrderItems;
+
+    protected async override Task OnInitializedAsync()
+    {
+        OrderItems = await _client.GetFromJsonAsync<List<OrderItem>>($"{Endpoints.OrderItemsEndPoint}");
+    }
+
+    async Task Delete(int OrderItemID)
+    {
+        var OrderItem = OrderItems.First(q => q.OrderItemID == OrderItemID);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {OrderItem.OrderItemID}?");
+        if (confirm)
+
+        {
+            await _client.DeleteAsync($"{Endpoints.OrderItemsEndPoint}/{OrderItemID}");
+            await OnInitializedAsync();
+        }
+    }
+
+}

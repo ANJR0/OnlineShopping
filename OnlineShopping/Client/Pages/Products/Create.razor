@@ -1,0 +1,28 @@
+﻿@page "/products/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Create New Product</h3>
+<hr />
+<hr />
+
+<FormComponent ButtonText="Create Product" OnValidSubmit="CreateProduct" product="@product" />
+
+@code {
+    Product product = new Product();
+
+    private IList<Brand> Brands;
+    private IList<Category> Categories;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Brands = await _client.GetFromJsonAsync<List<Brand>>($"{Endpoints.BrandsEndPoint}");
+        Categories = await _client.GetFromJsonAsync<List<Category>>($"{Endpoints.CategoriesEndPoint}");
+    }
+
+    private async Task CreateProduct()
+    {
+        await _client.PostAsJsonAsync(Endpoints.ProductsEndPoint, product);
+        _navManager.NavigateTo("/products/");
+    }
+}

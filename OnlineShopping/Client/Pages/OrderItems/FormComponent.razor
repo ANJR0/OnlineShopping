@@ -1,0 +1,72 @@
+﻿@inject HttpClient _client
+<EditForm Model="@orderItem" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <fieldset disabled="@Disabled">
+        <div class="form‐group">
+            <label>Quantity: </label>
+            <div>
+                <InputNumber @bind-Value="@orderItem.Quantity" class="form‐control" />
+                <ValidationMessage For="@(() => orderItem.Quantity)" />
+            </div>
+        </div>
+        <div class="form‐group">
+            <label>Product: </label>
+            <div>
+                <InputSelect @bind-Value="orderItem.ProductID" class="form-control">
+                    <option value="">-- Select Product --</option>
+                    @if (Products != null)
+                    {
+                        foreach (var product in Products)
+                        {
+                            <option value="@product.ProductID">
+                                @product.ProductNAME - @product.ProductPRICE
+                            </option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => orderItem.ProductID)" />
+            </div>
+        </div>
+        <div class="form‐group">
+            <label>Order: </label>
+            <div>
+                <InputSelect @bind-Value="orderItem.ShopOrderID" class="form-control">
+                    <option value="">-- Select Order --</option>
+                    @if (ShopOrders != null)
+                    {
+                        foreach (var order in ShopOrders)
+                        {
+                            <option value="@order.ShopOrderID">
+                                 @order.ShopOrderDATE - @order.ShopOrderSTATUS
+                            </option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => orderItem.ShopOrderID)" />
+            </div>
+        </div>
+    </fieldset>
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>
+    }
+    <BackToList Target="orderItems"/>
+</EditForm>
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public OrderItem orderItem { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private IList<ShopOrder> ShopOrders;
+    private IList<Product> Products;
+
+    protected async override Task OnInitializedAsync()
+    {
+        ShopOrders = await _client.GetFromJsonAsync<List<ShopOrder>>($"{Endpoints.ShopOrdersEndPoint}");
+        Products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndPoint}");
+    }
+}

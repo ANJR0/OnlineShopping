@@ -1,0 +1,78 @@
+﻿@page "/shopOrders/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3>ShopOrder</h3>
+<a href="/ShopOrders/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New ShopOrder
+</a>
+<br />
+<br />
+
+@if (ShopOrders == null)
+{
+    <div class="alert alert-info">Loading Category...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>ShopOrder ID</th>
+                <th>ShopOrder Date</th>
+                <th>ShopOrder Status</th>
+                <th>Customer ID</th>
+                <th>Staff ID</th>
+                <th>DeliveryID</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ShopOrder in ShopOrders)
+            {
+            <tr>
+                <td>@ShopOrder.ShopOrderID </td>
+                <td>@ShopOrder.ShopOrderDATE</td>
+                <td>@ShopOrder.ShopOrderSTATUS</td>
+                <td>@ShopOrder.Customer.CustomerID</td>
+                <td>@ShopOrder.Staff.StaffID</td>
+                <td>@ShopOrder.Delivery.DeliveryID</td>
+                <td>
+                    <a href="/ShopOrders/view/@ShopOrder.ShopOrderID" class="btn btn-primary">
+                        <span class="oi oi-book"></span>
+                    </a>
+                    <a href="/ShopOrders/edit/@ShopOrder.ShopOrderID" class="btn btn-warning">
+                        <span class="oi oi-pencil"></span>
+                    </a>
+                    <button class="btn btn-danger" @onclick="@(()=>Delete(ShopOrder.ShopOrderID))">
+                        <span class="oi oi-delete"></span>
+                    </button>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<ShopOrder> ShopOrders;
+
+    protected async override Task OnInitializedAsync()
+    {
+        ShopOrders = await _client.GetFromJsonAsync<List<ShopOrder>>($"{Endpoints.ShopOrdersEndPoint}");
+    }
+
+    async Task Delete(int ShopOrderID)
+    {
+        var ShopOrder = ShopOrders.First(q => q.ShopOrderID == ShopOrderID);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {ShopOrder.ShopOrderID}?");
+        if (confirm)
+
+        {
+            await _client.DeleteAsync($"{Endpoints.ShopOrdersEndPoint}/{ShopOrderID}");
+            await OnInitializedAsync();
+        }
+    }
+
+}

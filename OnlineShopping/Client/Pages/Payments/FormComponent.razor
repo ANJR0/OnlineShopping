@@ -1,0 +1,58 @@
+﻿@inject HttpClient _client
+<EditForm Model="@payment" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <fieldset disabled="@Disabled">
+        <div class="form‐group">
+            <label>Payment Method: </label>
+            <div>
+                <InputText @bind-Value="@payment.PaymentMethod" class="form‐control" />
+                <ValidationMessage For="@(() => payment.PaymentMethod)" />
+            </div>
+        </div>
+        <div class="form‐group">
+            <label>DateTime: </label>
+            <div>
+                <InputDate @bind-Value="@payment.Datetime" class="form‐control" />
+                <ValidationMessage For="@(() => payment.Datetime)" />
+            </div>
+        </div>
+        <div class="form‐group">
+            <label>Order ID : </label>
+            <div>
+                <InputSelect @bind-Value="payment.ShopOrderID" class="form-control">
+                    <option value="">-- Select Order --</option>
+                    @if (ShopOrders != null)
+                    {
+                        foreach (var order in ShopOrders)
+                        {
+                            <option value="@order.ShopOrderID">
+                                @order.ShopOrderDATE - @order.ShopOrderSTATUS
+                            </option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => payment.ShopOrderID)" />
+            </div>
+        </div>
+    </fieldset><br />
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>
+    }
+</EditForm>
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Payment payment { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private IList<ShopOrder> ShopOrders;
+
+    protected async override Task OnInitializedAsync()
+    {
+        ShopOrders = await _client.GetFromJsonAsync<List<ShopOrder>>($"{Endpoints.ShopOrdersEndPoint}");
+    }
+}
