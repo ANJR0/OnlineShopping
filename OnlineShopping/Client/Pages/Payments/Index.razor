@@ -28,28 +28,33 @@ else
                 <th>Payment Method</th>
                 <th>Datetime</th>
                 <th>ShopOrder ID</th>
+                <th>ShopOrder Date</th>
+                <th>ShopOrder Status</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var payment in Payments)
             {
-                <tr>
-                    <td>@payment.PaymentID </td>
-                    <td>@payment.PaymentMethod</td>
-                    <td>@payment.Datetime</td>
-                    <td>@payment.ShopOrder.ShopOrderID</td>
-                    <td>
-                        <a href="/Payments/view/@payment.PaymentID" class="btn btn-primary">
-                            <span class="oi oi-book"></span>
-                        </a>
-                        <a href="/Payments/edit/@payment.PaymentID" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
-                        <button class="btn btn-danger" @onclick="@(()=>Delete(payment.PaymentID))">
-                            <span class="oi oi-delete"></span>
-                        </button>
-                    </td>
-                </tr>
+            <tr>
+                <td>@payment.PaymentID </td>
+                <td>@payment.PaymentMethod</td>
+                <td>@payment.Datetime</td>
+                <td>@payment.ShopOrder.ShopOrderID</td>
+                <td>@payment.ShopOrder.ShopOrderDATE</td>
+                <td>@payment.ShopOrder.ShopOrderSTATUS</td>
+
+                <td>
+                    <a href="/Payments/view/@payment.PaymentID" class="btn btn-primary">
+                        <span class="oi oi-book"></span>
+                    </a>
+                    <a href="/Payments/edit/@payment.PaymentID" class="btn btn-warning">
+                        <span class="oi oi-pencil"></span>
+                    </a>
+                    <button class="btn btn-danger" @onclick="@(()=>Delete(payment.PaymentID))">
+                        <span class="oi oi-delete"></span>
+                    </button>
+                </td>
+            </tr>
             }
         </tbody>
     </table>

@@ -27,7 +27,7 @@
                         foreach (var order in ShopOrders)
                         {
                             <option value="@order.ShopOrderID">
-                                @order.ShopOrderDATE - @order.ShopOrderSTATUS
+                                 @order.ShopOrderDATE - @order.ShopOrderSTATUS
                             </option>
                         }
                     }
@@ -42,6 +42,7 @@
             @ButtonText
         </button>
     }
+    <BackToList Target="payments" />
 </EditForm>
 @code {
     [Parameter] public bool Disabled { get; set; } = false;

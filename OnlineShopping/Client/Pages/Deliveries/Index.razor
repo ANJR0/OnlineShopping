@@ -37,10 +37,10 @@ else
                     <td>@delivery.DeliveryDATE</td>
                     <td>@delivery.Staff.StaffID</td>
                     <td>
-                        <a href="/Payments/view/@delivery.DeliveryID" class="btn btn-primary">
+                        <a href="/Deliveries/view/@delivery.DeliveryID" class="btn btn-primary">
                             <span class="oi oi-book"></span>
                         </a>
-                        <a href="/Payments/edit/@delivery.DeliveryID" class="btn btn-warning">
+                        <a href="/Deliveries/edit/@delivery.DeliveryID" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
                         </a>
                         <button class="btn btn-danger" @onclick="@(()=>Delete(delivery.DeliveryID))">

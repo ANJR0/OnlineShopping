@@ -13,7 +13,7 @@ namespace OnlineShopping.Shared.Domain
         public string ProductPRICE { get; set; }
         public string Description { get; set; }
         public string Stocks { get; set; }
-        public int CatergoryID { get; set; }
+        public int CategoryID { get; set; }
         public virtual Category Category { get; set; }
         public int BrandID { get; set; }
         public virtual Brand Brand { get; set; }

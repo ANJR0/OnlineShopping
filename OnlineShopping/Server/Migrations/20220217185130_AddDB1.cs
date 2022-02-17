@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OnlineShopping.Server.Migrations
 {
-    public partial class AddDB : Migration
+    public partial class AddDB1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -265,8 +265,7 @@ namespace OnlineShopping.Server.Migrations
                     ProductPRICE = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Stocks = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CatergoryID = table.Column<int>(type: "int", nullable: false),
-                    CategoryID = table.Column<int>(type: "int", nullable: true),
+                    CategoryID = table.Column<int>(type: "int", nullable: false),
                     BrandID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -283,7 +282,7 @@ namespace OnlineShopping.Server.Migrations
                         column: x => x.CategoryID,
                         principalTable: "Categories",
                         principalColumn: "CategoryID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

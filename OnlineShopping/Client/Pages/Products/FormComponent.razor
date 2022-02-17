@@ -32,25 +32,25 @@
             </div>
         </div>
         <div class="form‐group">
-            <label>Catergory ID: </label>
+            <label>Catergory: </label>
             <div>
-                <InputSelect @bind-Value="product.CatergoryID" class="form-control">
+                <InputSelect @bind-Value="product.CategoryID" class="form-control">
                     <option value="">-- Select Product --</option>
                     @if (Categories != null)
                     {
                         foreach (var category in Categories)
                         {
                             <option value="@category.CategoryID">
-                                 @category.CategoryNAME. - @category.Description
+                                 @category.CategoryNAME
                             </option>
                         }
                     }
                 </InputSelect>
-                <ValidationMessage For="@(() => product.CatergoryID)" />
+                <ValidationMessage For="@(() => product.CategoryID)" />
             </div>
         </div>
         <div class="form‐group">
-            <label>Brand ID: </label>
+            <label>Brand: </label>
             <div>
                 <InputSelect @bind-Value="product.BrandID" class="form-control">
                     <option value="">-- Select Product --</option>
@@ -59,7 +59,7 @@
                         foreach (var brand in Brands)
                         {
                             <option value="@brand.BrandID">
-                                 -@brand.BrandNAME
+                                 @brand.BrandNAME
                             </option>
                         }
                     }

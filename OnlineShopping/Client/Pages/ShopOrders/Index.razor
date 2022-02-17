@@ -23,9 +23,11 @@ else
                 <th>ShopOrder ID</th>
                 <th>ShopOrder Date</th>
                 <th>ShopOrder Status</th>
-                <th>Customer ID</th>
-                <th>Staff ID</th>
-                <th>DeliveryID</th>
+                <th>Customer Full Name </th>
+                <th>Customer Email </th>
+                <th>Staff Name</th>
+                <th>Staff Email</th>
+                <th>Delivery Date</th>
             </tr>
         </thead>
         <tbody>
@@ -35,9 +37,11 @@ else
                 <td>@ShopOrder.ShopOrderID </td>
                 <td>@ShopOrder.ShopOrderDATE</td>
                 <td>@ShopOrder.ShopOrderSTATUS</td>
-                <td>@ShopOrder.Customer.CustomerID</td>
-                <td>@ShopOrder.Staff.StaffID</td>
-                <td>@ShopOrder.Delivery.DeliveryID</td>
+                <td>@ShopOrder.Customer.Full_name</td>
+                <td>@ShopOrder.Customer.Email</td>
+                <td>@ShopOrder.Staff.StaffName</td>
+                <td>@ShopOrder.Staff.StaffEMAIL</td>
+                <td>@ShopOrder.Delivery.DeliveryDATE</td>
                 <td>
                     <a href="/ShopOrders/view/@ShopOrder.ShopOrderID" class="btn btn-primary">
                         <span class="oi oi-book"></span>

@@ -472,10 +472,7 @@ namespace OnlineShopping.Server.Migrations
                     b.Property<int>("BrandID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CategoryID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CatergoryID")
+                    b.Property<int>("CategoryID")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -658,7 +655,9 @@ namespace OnlineShopping.Server.Migrations
 
                     b.HasOne("OnlineShopping.Shared.Domain.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("CategoryID");
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Brand");
 

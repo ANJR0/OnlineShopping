@@ -25,33 +25,33 @@ else
                 <th>Product Price</th>
                 <th>Description</th>
                 <th>Stocks</th>
-                <th>Category ID</th>
-                <th>Brand ID</th>
+                <th>Category Name</th>
+                <th>Brand Name</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var Product in Products)
             {
-                <tr>
-                    <td>@Product.ProductID </td>
-                    <td>@Product.ProductNAME</td>
-                    <td>@Product.ProductPRICE</td>
-                    <td>@Product.Description</td>
-                    <td>@Product.Stocks</td>
-                    <td>@Product.Category.CategoryID</td>
-                    <td>@Product.Brand.BrandID</td>
-                    <td>
-                        <a href="/Products/view/@Product.ProductID" class="btn btn-primary">
-                            <span class="oi oi-book"></span>
-                        </a>
-                        <a href="/Products/edit/@Product.ProductID" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
-                        <button class="btn btn-danger" @onclick="@(()=>Delete(Product.ProductID))">
-                            <span class="oi oi-delete"></span>
-                        </button>
-                    </td>
-                </tr>
+            <tr>
+                <td>@Product.ProductID </td>
+                <td>@Product.ProductNAME</td>
+                <td>@Product.ProductPRICE</td>
+                <td>@Product.Description</td>
+                <td>@Product.Stocks</td>
+                <td>@Product.Category.CategoryNAME</td>
+                <td>@Product.Brand.BrandNAME</td>
+                <td>
+                    <a href="/Products/view/@Product.ProductID" class="btn btn-primary">
+                        <span class="oi oi-book"></span>
+                    </a>
+                    <a href="/Products/edit/@Product.ProductID" class="btn btn-warning">
+                        <span class="oi oi-pencil"></span>
+                    </a>
+                    <button class="btn btn-danger" @onclick="@(()=>Delete(Product.ProductID))">
+                        <span class="oi oi-delete"></span>
+                    </button>
+                </td>
+            </tr>
             }
         </tbody>
     </table>

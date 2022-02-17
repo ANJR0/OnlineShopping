@@ -6,63 +6,70 @@
         <div class="form‐group">
             <label>Shop Date: </label>
             <div>
-                <InputNumber @bind-Value="@shopOrder.ShopOrderDATE" class="form‐control" />
+                <InputDate @bind-Value="@shopOrder.ShopOrderDATE" class="form‐control" />
                 <ValidationMessage For="@(() => shopOrder.ShopOrderDATE)" />
             </div>
         </div>
         <div class="form‐group">
             <label>Shop Status: </label>
             <div>
-                <InputNumber @bind-Value="@shopOrder.ShopOrderSTATUS" class="form‐control" />
+                <InputText @bind-Value="@shopOrder.ShopOrderSTATUS" class="form‐control" />
                 <ValidationMessage For="@(() => shopOrder.ShopOrderSTATUS)" />
             </div>
         </div>
-        <label>Customer ID: </label>
-        <div>
-            <InputSelect @bind-Value="shopOrder.CustomerID" class="form-control">
-                <option value="">-- Select Customer --</option>
-                @if (Customers != null)
-                {
-                    foreach (var customer in Customers)
+        <div class="form‐group">
+            <label>Customer: </label>
+            <div>
+                <InputSelect @bind-Value="shopOrder.CustomerID" class="form-control">
+                    <option value="">-- Select Customer --</option>
+                    @if (Customers != null)
                     {
-                        <option value="@customer.CustomerID">
-                            @customer.CustomerID @customer.Full_name. - @customer.Email
-                        </option>
+                        foreach (var customer in Customers)
+                        {
+                            <option value="@customer.CustomerID">
+                                @customer.Full_name - @customer.Email
+                            </option>
+                        }
                     }
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => shopOrder.CustomerID)" />
+                </InputSelect>
+                <ValidationMessage For="@(() => shopOrder.CustomerID)" />
+            </div>
         </div>
-        <label>Staff ID: </label>
-        <div>
-            <InputSelect @bind-Value="shopOrder.StaffID" class="form-control">
-                <option value="">-- Select Order --</option>
-                @if (Staffs != null)
-                {
-                    foreach (var staff in Staffs)
+        <div class="form‐group">
+            <label>Staff: </label>
+            <div>
+                <InputSelect @bind-Value="shopOrder.StaffID" class="form-control">
+                    <option value="">-- Select Order --</option>
+                    @if (Staffs != null)
                     {
-                        <option value="@staff.StaffID">
-                            @staff.StaffID @staff.StaffName - @staff.StaffEMAIL
-                        </option>
+                        foreach (var staff in Staffs)
+                        {
+                            <option value="@staff.StaffID">
+                                @staff.StaffName - @staff.StaffEMAIL
+                            </option>
+                        }
                     }
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => shopOrder.StaffID)" />
+                </InputSelect>
+                <ValidationMessage For="@(() => shopOrder.StaffID)" />
+            </div>
         </div>
-        <label>Delivery ID: </label>
-        <div>
-            <InputSelect @bind-Value="shopOrder.DeliveryID" class="form-control">
-                <option value="">-- Select Order --</option>
-                @if (Deliveries != null)
-                {
-                    foreach (var delivery in Deliveries)
+        <div class="form‐group">
+            <label>Delivery: </label>
+            <div>
+                <InputSelect @bind-Value="shopOrder.DeliveryID" class="form-control">
+                    <option value="">-- Select Order --</option>
+                    @if (Deliveries != null)
                     {
-                        <option value="@delivery.DeliveryID">@delivery.DeliveryDATE
-                        </option>
+                        foreach (var delivery in Deliveries)
+                        {
+                            <option value="@delivery.DeliveryID">
+                                @delivery.DeliveryDATE
+                            </option>
+                        }
                     }
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => shopOrder.DeliveryID)" />
+                </InputSelect>
+                <ValidationMessage For="@(() => shopOrder.DeliveryID)" />
+            </div>
         </div>
     </fieldset>
     @if (!Disabled)

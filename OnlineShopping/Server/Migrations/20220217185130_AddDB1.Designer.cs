@@ -10,8 +10,8 @@ using OnlineShopping.Server.Data;
 namespace OnlineShopping.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220217174541_AddDB")]
-    partial class AddDB
+    [Migration("20220217185130_AddDB1")]
+    partial class AddDB1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -474,10 +474,7 @@ namespace OnlineShopping.Server.Migrations
                     b.Property<int>("BrandID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CategoryID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CatergoryID")
+                    b.Property<int>("CategoryID")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -660,7 +657,9 @@ namespace OnlineShopping.Server.Migrations
 
                     b.HasOne("OnlineShopping.Shared.Domain.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("CategoryID");
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Brand");
 

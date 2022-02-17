@@ -30,7 +30,7 @@ namespace OnlineShopping.Server.Controllers
         public async Task<ActionResult> GetProducts()
         {
             //return await _context.Products.ToListAsync();
-            var Products = await _unitOfWork.Products.GetAll(includes: q => q.Include(x => x.Brand).Include(x => x.Category));
+            var Products = await _unitOfWork.Products.GetAll(includes: q => q.Include(x => x.Category).Include(x => x.Brand));
             return Ok(Products);
         }
 
