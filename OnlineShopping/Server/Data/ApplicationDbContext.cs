@@ -28,6 +28,7 @@ namespace OnlineShopping.Server.Data
         public DbSet<ShopOrder> ShopOrders { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
     } 
 }

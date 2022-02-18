@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Toolbelt.Blazor.Extensions.DependencyInjection;
 
 namespace OnlineShopping.Client
 {
@@ -18,13 +19,18 @@ namespace OnlineShopping.Client
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
-            builder.Services.AddHttpClient("OnlineShopping.ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
+            builder.Services.AddHttpClient("OnlineShopping.ServerAPI", (sp, client) => {
+                client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
+                client.EnableIntercept(sp);
+                })
                 .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
 
             // Supply HttpClient instances that include access tokens when making requests to the server project
             builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("OnlineShopping.ServerAPI"));
 
             builder.Services.AddApiAuthorization();
+
+            builder.Services.AddHttpClientInterceptor();
 
             await builder.Build().RunAsync();
         }

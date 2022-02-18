@@ -51,6 +51,8 @@ namespace OnlineShopping.Server.Repository
         {
             //To be implemented
             //string user = "System";
+            var userId = httpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user = await _userManager.FindByIdAsync(userId);
 
             var entries = _context.ChangeTracker.Entries()
                 .Where(q => q.State == EntityState.Modified ||

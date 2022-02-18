@@ -18,5 +18,6 @@ namespace OnlineShopping.Client.Static
         public static readonly string PaymentsEndPoint = $"{Prefix}/payments";
         public static readonly string ProductsEndPoint = $"{Prefix}/products";
         public static readonly string StaffsEndPoint = $"{Prefix}/staffs";
+        public static readonly string AccountsEndPoint = $"{Prefix}/accounts";
     }
 }
