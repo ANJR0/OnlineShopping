@@ -147,6 +147,22 @@ namespace OnlineShopping.Server.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "ad2bcf0c-20db-474f-8407-5a6b159518ba",
+                            ConcurrencyStamp = "94bbfefe-962c-4250-81e0-d6fd8c20b363",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        },
+                        new
+                        {
+                            Id = "bd2bcf0c-20db-474f-8407-5a6b159518bb",
+                            ConcurrencyStamp = "6cde2524-81c9-4bd6-8131-13fba54b015d",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -234,6 +250,13 @@ namespace OnlineShopping.Server.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "3781efa7-66dc-47f0-860f-e506d04102e4",
+                            RoleId = "ad2bcf0c-20db-474f-8407-5a6b159518ba"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -326,6 +349,24 @@ namespace OnlineShopping.Server.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "80116ae9-3e72-4dc7-9869-892bd0b9c492",
+                            Email = "admin@localhost.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@LOCALHOST.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEI1rW7O1b3H85Rdr12Av9oF2Ey7YvRXi/dX95WEQGvbIq4TPZvxOyiNEYxWbvmRXIg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "5f4fa797-5f17-47ae-b99f-4ebc42cbcbd9",
+                            TwoFactorEnabled = false,
+                            UserName = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("OnlineShopping.Shared.Domain.Brand", b =>
@@ -341,6 +382,13 @@ namespace OnlineShopping.Server.Migrations
                     b.HasKey("BrandID");
 
                     b.ToTable("Brands");
+
+                    b.HasData(
+                        new
+                        {
+                            BrandID = 1,
+                            BrandNAME = "Nike"
+                        });
                 });
 
             modelBuilder.Entity("OnlineShopping.Shared.Domain.Category", b =>
@@ -359,6 +407,14 @@ namespace OnlineShopping.Server.Migrations
                     b.HasKey("CategoryID");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryID = 1,
+                            CategoryNAME = "Clothes",
+                            Description = " Causal and Fashion"
+                        });
                 });
 
             modelBuilder.Entity("OnlineShopping.Shared.Domain.Customer", b =>
@@ -392,6 +448,19 @@ namespace OnlineShopping.Server.Migrations
                     b.HasKey("CustomerID");
 
                     b.ToTable("Customers");
+
+                    b.HasData(
+                        new
+                        {
+                            CustomerID = 1,
+                            Billing_address = "555A Lakeside",
+                            Country = "Singapore",
+                            Default_shipping_address = "555A Lakeside",
+                            Email = "blabla@gmail.com",
+                            Full_name = "Melvin Lee",
+                            Password = "hello12345",
+                            Phone = "93434383"
+                        });
                 });
 
             modelBuilder.Entity("OnlineShopping.Shared.Domain.Delivery", b =>
@@ -551,6 +620,16 @@ namespace OnlineShopping.Server.Migrations
                     b.HasKey("StaffID");
 
                     b.ToTable("Staffs");
+
+                    b.HasData(
+                        new
+                        {
+                            StaffID = 1,
+                            Gender = "Female",
+                            StaffEMAIL = "Kalan@gmail.com",
+                            StaffName = "Kalan",
+                            StaffPASSWORD = "Kalan12345"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

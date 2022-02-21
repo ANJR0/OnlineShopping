@@ -29,9 +29,11 @@ namespace OnlineShopping.Server.Controllers
         [HttpGet]
         public async Task<ActionResult> GetBrands()
         {
+            
             //return await _context.Brands.ToListAsync();
             var brands = await _unitOfWork.Brands.GetAll();
             return Ok(brands);
+            //return NotFound();
         }
 
         // GET: api/Brands/5

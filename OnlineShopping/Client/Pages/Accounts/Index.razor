@@ -3,6 +3,8 @@
 @attribute [Authorize]
 @using System.Security.Claims
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
 
 <h3>App Users</h3>
 
@@ -45,7 +47,7 @@ else
                     <td>@appUser.FirstName</td>
                     <td>@appUser.LastName</td>
                 </tr>
-           }
+            }
         </tbody>
     </table>
 }
@@ -55,10 +57,11 @@ else
     private string _currentUserId;
     private string _currentUserName;
     private string _currentUserRole;
+
     protected async override Task OnInitializedAsync()
     {
-        AppUsers = await
-        _client.GetFromJsonAsync<List<AppUser>>($"{Endpoints.AccountsEndPoint}");
+        _interceptor.MonitorEvent();
+        AppUsers = await _client.GetFromJsonAsync<List<AppUser>>($"{Endpoints.AccountsEndPoint}");
         var authState = await
         AuthenticationStateProvider.GetAuthenticationStateAsync();
         var user = authState.User;
@@ -74,7 +77,7 @@ else
                     {
                         _currentUserId = claim.Value;
                         continue;
-                       
+
                     }
                     if (claim.Type == "name")
                     {
@@ -86,9 +89,12 @@ else
         }
         if (_currentUserId != String.Empty)
         {
-            _currentUserRole = await
-            _client.GetStringAsync($"{Endpoints.AccountsEndPoint}/{_currentUserId}");
+            _currentUserRole = await _client.GetStringAsync($"{Endpoints.AccountsEndPoint}/{_currentUserId}");
         }
+    }
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
     }
 }
 //End of Code

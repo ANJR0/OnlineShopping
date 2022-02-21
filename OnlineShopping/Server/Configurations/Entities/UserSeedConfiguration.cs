@@ -20,8 +20,6 @@ namespace OnlineShopping.Server.Configurations.Entities
                 Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                 Email = "admin@localhost.com",
                 NormalizedEmail = "ADMIN@LOCALHOST.COM",
-                FirstName = "Admin",
-                LastName = "User",
                 UserName = "Admin",
                 NormalizedUserName = "ADMIN",
                 PasswordHash = hasher.HashPassword(null, "P@ssword1")

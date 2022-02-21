@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using OnlineShopping.Shared.Domain;
+using OnlineShopping.Client.Model;
 using OnlineShopping.Server.Configurations.Entities;
 
 namespace OnlineShopping.Server.Data
@@ -30,5 +31,16 @@ namespace OnlineShopping.Server.Data
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.ApplyConfiguration(new BrandSeedConfiguration());
+            builder.ApplyConfiguration(new CategorySeedConfiguration());
+            builder.ApplyConfiguration(new CustomerSeedConfiguration());
+            builder.ApplyConfiguration(new StaffSeedConfiguration());
+            builder.ApplyConfiguration(new RoleSeedConfiguration());
+            builder.ApplyConfiguration(new UserSeedConfiguration());
+            builder.ApplyConfiguration(new UserRoleSeedConfiguration());
+        }
     } 
 }

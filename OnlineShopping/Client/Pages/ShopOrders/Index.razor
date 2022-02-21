@@ -2,6 +2,8 @@
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
 
 <h3>ShopOrder</h3>
 <a href="/ShopOrders/create" class="btn btn-secondary">
@@ -17,7 +19,7 @@
 }
 else
 {
-    <table class="table table-responsive">
+    <table class="table table-responsive" id="shopOrdersTable">
         <thead>
             <tr>
                 <th>ShopOrder ID</th>
@@ -33,27 +35,27 @@ else
         <tbody>
             @foreach (var ShopOrder in ShopOrders)
             {
-            <tr>
-                <td>@ShopOrder.ShopOrderID </td>
-                <td>@ShopOrder.ShopOrderDATE</td>
-                <td>@ShopOrder.ShopOrderSTATUS</td>
-                <td>@ShopOrder.Customer.Full_name</td>
-                <td>@ShopOrder.Customer.Email</td>
-                <td>@ShopOrder.Staff.StaffName</td>
-                <td>@ShopOrder.Staff.StaffEMAIL</td>
-                <td>@ShopOrder.Delivery.DeliveryDATE</td>
-                <td>
-                    <a href="/ShopOrders/view/@ShopOrder.ShopOrderID" class="btn btn-primary">
-                        <span class="oi oi-book"></span>
-                    </a>
-                    <a href="/ShopOrders/edit/@ShopOrder.ShopOrderID" class="btn btn-warning">
-                        <span class="oi oi-pencil"></span>
-                    </a>
-                    <button class="btn btn-danger" @onclick="@(()=>Delete(ShopOrder.ShopOrderID))">
-                        <span class="oi oi-delete"></span>
-                    </button>
-                </td>
-            </tr>
+                <tr>
+                    <td>@ShopOrder.ShopOrderID </td>
+                    <td>@ShopOrder.ShopOrderDATE</td>
+                    <td>@ShopOrder.ShopOrderSTATUS</td>
+                    <td>@ShopOrder.Customer.Full_name</td>
+                    <td>@ShopOrder.Customer.Email</td>
+                    <td>@ShopOrder.Staff.StaffName</td>
+                    <td>@ShopOrder.Staff.StaffEMAIL</td>
+                    <td>@ShopOrder.Delivery.DeliveryDATE</td>
+                    <td>
+                        <a href="/ShopOrders/view/@ShopOrder.ShopOrderID" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/ShopOrders/edit/@ShopOrder.ShopOrderID" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(ShopOrder.ShopOrderID))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
@@ -64,7 +66,19 @@ else
 
     protected async override Task OnInitializedAsync()
     {
+        _interceptor.MonitorEvent();
         ShopOrders = await _client.GetFromJsonAsync<List<ShopOrder>>($"{Endpoints.ShopOrdersEndPoint}");
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#shopOrdersTable");
+    }
+
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
+        js.InvokeVoidAsync("DataTablesDispose", "#shopOrdersTable");
     }
 
     async Task Delete(int ShopOrderID)

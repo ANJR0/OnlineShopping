@@ -2,6 +2,8 @@
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
 
 
 
@@ -21,7 +23,7 @@
 }
 else
 {
-    <table class="table table-responsive">
+    <table class="table table-responsive" id="paymentsTable" >
         <thead>
             <tr>
                 <th>Payment ID</th>
@@ -35,26 +37,26 @@ else
         <tbody>
             @foreach (var payment in Payments)
             {
-            <tr>
-                <td>@payment.PaymentID </td>
-                <td>@payment.PaymentMethod</td>
-                <td>@payment.Datetime</td>
-                <td>@payment.ShopOrder.ShopOrderID</td>
-                <td>@payment.ShopOrder.ShopOrderDATE</td>
-                <td>@payment.ShopOrder.ShopOrderSTATUS</td>
+                <tr>
+                    <td>@payment.PaymentID </td>
+                    <td>@payment.PaymentMethod</td>
+                    <td>@payment.Datetime</td>
+                    <td>@payment.ShopOrder.ShopOrderID</td>
+                    <td>@payment.ShopOrder.ShopOrderDATE</td>
+                    <td>@payment.ShopOrder.ShopOrderSTATUS</td>
 
-                <td>
-                    <a href="/Payments/view/@payment.PaymentID" class="btn btn-primary">
-                        <span class="oi oi-book"></span>
-                    </a>
-                    <a href="/Payments/edit/@payment.PaymentID" class="btn btn-warning">
-                        <span class="oi oi-pencil"></span>
-                    </a>
-                    <button class="btn btn-danger" @onclick="@(()=>Delete(payment.PaymentID))">
-                        <span class="oi oi-delete"></span>
-                    </button>
-                </td>
-            </tr>
+                    <td>
+                        <a href="/Payments/view/@payment.PaymentID" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/Payments/edit/@payment.PaymentID" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(payment.PaymentID))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
@@ -65,7 +67,19 @@ else
 
     protected async override Task OnInitializedAsync()
     {
+        _interceptor.MonitorEvent();
         Payments = await _client.GetFromJsonAsync<List<Payment>>($"{Endpoints.PaymentsEndPoint}");
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#paymentsTable");
+    }
+
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
+        js.InvokeVoidAsync("DataTablesDispose", "#paymentsTable");
     }
 
     async Task Delete(int PaymentID)
