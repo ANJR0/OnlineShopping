@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineShopping.Server.Data;
 
 namespace OnlineShopping.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220221095222_AddForm1")]
+    partial class AddForm1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -152,14 +154,14 @@ namespace OnlineShopping.Server.Migrations
                         new
                         {
                             Id = "ad2bcf0c-20db-474f-8407-5a6b159518ba",
-                            ConcurrencyStamp = "d581ec06-829c-45c9-a75d-9be186681b4a",
+                            ConcurrencyStamp = "d89491f6-f41a-49c9-9eb6-9418f3be451c",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "bd2bcf0c-20db-474f-8407-5a6b159518bb",
-                            ConcurrencyStamp = "436e3fd3-c13b-4bcb-84ea-b0323ae35c0f",
+                            ConcurrencyStamp = "ce403cb5-53db-4f70-a48f-879320559c54",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -355,15 +357,15 @@ namespace OnlineShopping.Server.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "09d36c34-d9eb-4138-a9b6-25ce49d36abb",
+                            ConcurrencyStamp = "d433b799-1b5b-43bb-81ed-5c2c49e24b8a",
                             Email = "admin@localhost.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAECzrK/o5XLsAH2tvelZPJ0u6i/kgN9NguYMNWgQk5cGzptPr4Q+B/3sxqqZA8H5rBA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPQbfx7kMHvixwg2wgEwdWncUkt9SYa1UcEqf1ShN+ZV6dGAGMNK6uZL/4ChPP9DCw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e7c8afe2-ae8d-4df5-99fc-339019f6e535",
+                            SecurityStamp = "f1145a1f-e8e3-4e2a-85f6-1bafaaff0406",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -484,8 +486,7 @@ namespace OnlineShopping.Server.Migrations
                     b.Property<DateTime>("DeliveryDATE")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("StaffID")
-                        .IsRequired()
+                    b.Property<int>("StaffID")
                         .HasColumnType("int");
 
                     b.HasKey("DeliveryID");
@@ -502,15 +503,13 @@ namespace OnlineShopping.Server.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ProductID")
-                        .IsRequired()
+                    b.Property<int>("ProductID")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ShopOrderID")
-                        .IsRequired()
+                    b.Property<int>("ShopOrderID")
                         .HasColumnType("int");
 
                     b.HasKey("OrderItemID");
@@ -536,8 +535,7 @@ namespace OnlineShopping.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ShopOrderID")
-                        .IsRequired()
+                    b.Property<int>("ShopOrderID")
                         .HasColumnType("int");
 
                     b.HasKey("PaymentID");
@@ -594,8 +592,7 @@ namespace OnlineShopping.Server.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CustomerID")
-                        .IsRequired()
+                    b.Property<int>("CustomerID")
                         .HasColumnType("int");
 
                     b.Property<int?>("DeliveryID")
